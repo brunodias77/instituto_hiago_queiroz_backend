@@ -1,6 +1,5 @@
 package com.brunodias.template.entities;
 
-
 import com.brunodias.template.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,19 +14,18 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "users")
-@Table(name="users")
-@AllArgsConstructor
+@Table(name = "users")
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 @Data
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
     private String login;
     private String password;
     private UserRole role;
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 
     public User(String login, String password, UserRole role) {
         this.login = login;
@@ -37,8 +35,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
