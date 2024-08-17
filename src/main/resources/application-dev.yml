@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/template # URL de conexão ao banco de dados PostgreSQL
+    url: jdbc:postgresql://localhost:5432/IHQ # URL de conexão ao banco de dados PostgreSQL
     username: admin # Nome de usuário do banco de dados
     password: admin # Senha do banco de dados
     driver-class-name: org.postgresql.Driver # Driver JDBC do PostgreSQL

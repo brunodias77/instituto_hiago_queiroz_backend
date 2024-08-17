@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: template_auth_jwt
+    container_name: postgres_bd
     image: postgres
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=template
+      - POSTGRES_DB=IHQ
