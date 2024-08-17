@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: instituto_hiago_queiroz
+    container_name: postgres_bd
     image: postgres
     ports:
       - 5432:5432

@@ -31,7 +31,7 @@ public class AuthController {
     private TokenService _tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginAuthResponse> login(@RequestBody @Valid LoginAuthRequest request){
+    public ResponseEntity<LoginAuthResponse> login(@RequestBody @Valid LoginAuthRequest request) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         var auth = this._authenticationManager.authenticate(usernamePassword);
         var token = this._tokenService.generateToken((User) auth.getPrincipal());
@@ -39,13 +39,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterAuthRequets request ){
-        var userExist = this._userRepository.findByLogin(request.email());
-        if(userExist != null){
+    public ResponseEntity register(@RequestBody @Valid RegisterAuthRequets request) {
+        var userExist = this._userRepository.findByEmail(request.email());
+        if (userExist != null) {
             return ResponseEntity.badRequest().build();
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
-        var newUser = new User(request.email(), encryptedPassword, request.role());
+        var newUser = User.builder().firstName(request.firstName()).lastName(request.lastName()).email(request.email())
+                .password(encryptedPassword).role(request.role()).build();
         this._userRepository.save(newUser);
         return ResponseEntity.ok().build();
     }

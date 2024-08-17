@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Post extends BaseEntity{
     private String title;
     private String content;
@@ -24,7 +26,6 @@ public class Post extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private LocalDateTime createdDate;
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
